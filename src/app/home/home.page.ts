@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Network } from '@ionic-native/network/ngx';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,19 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
-
+  constructor(private network: Network) {
+    alert('App Lista Home');
+    this.network.onDisconnect().subscribe(() => {
+      alert('network was disconnected');
+    });
+    this.network.onConnect().subscribe(() => {
+      alert('network Connected');
+    });
+    const networkState = this.network.type;
+    alert('Conection type ' + networkState);
+    alert('tipo de datos' + typeof(networkState));
+    if (networkState === 'none') {
+      alert('No hay internet');
+    }
+  }
 }
